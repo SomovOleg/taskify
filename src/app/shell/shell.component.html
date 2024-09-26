@@ -14,6 +14,7 @@
     <mat-sidenav mode="over" [(opened)]="sideNavState">
     <button mat-button (click)="changeTab(0)">Board</button>
     <button mat-button (click)="changeTab(1)">Create new task</button>
+    <button mat-button (click)="exportToExcel()">Export to Excel</button>
     </mat-sidenav>
 
     <mat-sidenav-content [ngSwitch]="currentTab">

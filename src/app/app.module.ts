@@ -7,6 +7,7 @@ import { ShellComponent } from './shell/shell.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { DeskComponent } from './desk/desk.component';
 import { AuthComponent } from './auth/auth.component';
@@ -56,6 +57,7 @@ import { AuthGuard } from './guards/auth-guard';
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     //Firebase
     AngularFireModule,

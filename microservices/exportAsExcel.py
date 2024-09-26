@@ -2,11 +2,14 @@ from flask import Flask, jsonify, request, send_file
 import firebase_admin
 from firebase_admin import credentials, firestore
 from openpyxl import Workbook
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
 
-cred = credentials.Certificate("app-taskify-firebase-adminsdk-kmllv-6cec74294d.json")
+CORS(app)
+
+cred = credentials.Certificate("app-taskify-firebase-adminsdk-kmllv-103becd50b.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 

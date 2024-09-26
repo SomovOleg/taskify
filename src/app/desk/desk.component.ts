@@ -112,4 +112,9 @@ export class DeskComponent implements OnInit {
             width: '600px',
           })
     }
+
+    public exportToExcel() {
+        console.log('testing');
+        this._deskService.exportToExcel();
+    }
 }
