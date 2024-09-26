@@ -1,0 +1,114 @@
+<div class="board">
+    <div class="board-wrapper">
+        <div class="board-columns" cdkDropListGroup>
+
+            <div class="board-column">
+                <div class="column-title">
+                    <span>Backlog</span>
+                </div>
+                <div
+                    class="task-container"
+                    cdkDropList
+                    id="0"
+                    [cdkDropListData]="deskStash.backLog"
+                    (cdkDropListDropped)="updateTaskState($event)"
+                >
+                    <mat-card
+                        *ngFor="let task of deskStash.backLog"
+                        cdkDrag
+                        [cdkDragData]="task"
+                        (click)="taskDialogOpen(task)"
+                    >
+                        <mat-card-header>
+                            <span>{{task.name}}</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>Deadline on {{task.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+            </div>
+            <div class="board-column">
+                <div class="column-title">
+                    <span>In Dev</span>
+                </div>
+                <div
+                    class="task-container"
+                    cdkDropList
+                    id="1"
+                    [cdkDropListData]="deskStash.inDev"
+                    (cdkDropListDropped)="updateTaskState($event)"
+                >
+                    <mat-card
+                        *ngFor="let task of deskStash.inDev"
+                        cdkDrag
+                        [cdkDragData]="task"
+                        (click)="taskDialogOpen(task)"
+                    >
+                        <mat-card-header>
+                            <span>{{task.name}}</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>Deadline on {{task.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+            </div>
+            <div class="board-column">
+                <div class="column-title">
+                    <span>Testing</span>
+                </div>
+                <div
+                    class="task-container"
+                    cdkDropList
+                    id="2"
+                    [cdkDropListData]="deskStash.testing"
+                    (cdkDropListDropped)="updateTaskState($event)"
+                >
+                    <mat-card
+                        *ngFor="let task of deskStash.testing"
+                        cdkDrag
+                        [cdkDragData]="task"
+                        (click)="taskDialogOpen(task); exportToExcel()"
+                    >
+                        <mat-card-header>
+                            <span>{{task.name}}</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>Deadline on {{task.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="board-column">
+                <div class="column-title">
+                    <span>Done</span>
+                </div>
+                <div
+                    class="task-container"
+                    cdkDropList
+                    id="3"
+                    [cdkDropListData]="deskStash.done"
+                    (cdkDropListDropped)="updateTaskState($event)"
+                >
+                    <mat-card
+                        *ngFor="let task of deskStash.done"
+                        cdkDrag
+                        [cdkDragData]="task"
+                        (click)="taskDialogOpen(task)"
+                        >
+                        <mat-card-header>
+                            <span>{{task.name}}</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p> Deadline on {{ task.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

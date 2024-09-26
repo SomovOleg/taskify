@@ -1,0 +1,31 @@
+<mat-toolbar>
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="changeSideNavState()"
+    >
+        <mat-icon class="toolbar-icon">menu</mat-icon>
+    </button>
+    <span>Board</span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav mode="over" [(opened)]="sideNavState">
+    <button mat-button (click)="changeTab(0)">Board</button>
+    <button mat-button (click)="changeTab(1)">Create new task</button>
+    <button mat-button (click)="exportToExcel()">Export to Excel</button>
+    </mat-sidenav>
+
+    <mat-sidenav-content [ngSwitch]="currentTab">
+    <app-desk
+        *ngSwitchCase="0"
+    >
+    </app-desk>
+
+    <app-create-task
+        *ngSwitchCase="1"
+    >
+    </app-create-task>
+
+</mat-sidenav-content>

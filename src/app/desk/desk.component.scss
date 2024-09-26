@@ -1,0 +1,96 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+
+    background-image: url('../../assets/gradient-background-desk.jpg');
+    background-size: cover;
+
+    overflow-y: auto !important;
+    .board-wrapper {
+        display: flex;
+        flex-grow: 1;
+        overflow: auto;
+
+        .board-columns {
+            display: flex;
+            flex-grow: 1;
+
+            .board-column {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                flex-basis: 0;
+
+                min-width: 250px;
+                margin: 40px;
+                padding: 24px;
+
+                border-radius: 4px;
+
+                background: rgba(white, 0.5);
+
+                &:not(:first-child) {
+                    margin-left: 0;
+                }
+
+                .column-title {
+                    font-size: 16px;
+                    font-weight: 800;
+                    width: 100%;
+                    margin-bottom: 4px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    border-bottom: 2px solid black;
+                }
+
+                .task-container {
+                    overflow-y: auto;
+                    scrollbar-width: none;
+
+                    .mat-mdc-card {
+                        margin: 8px;
+                        background: whitesmoke;
+
+                        .mat-mdc-card-header {
+                            display: flex;
+                            margin-bottom: 4px;
+                            padding-bottom: 4px;
+                            border-bottom: 0.5px solid gray;
+                        }
+                    }
+
+                    .mat-mdc-card:hover {
+                        background: rgb(209, 187, 187);
+                    }
+
+                    flex-grow: 1;
+
+                }
+            }
+        }
+    }
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: rgba(white, 0.5);
+    color: black;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }

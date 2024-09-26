@@ -1,0 +1,57 @@
+:host {
+    .create-task {
+        background-image: url('../../assets/gradient-background-desk.jpg');
+        background-size: cover;
+        height: 100%;
+
+        overflow-y: hidden !important;
+
+        display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+        .create-task-form {
+            overflow: none;
+
+            div.task-form {
+                width: 750px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+                margin: 16px;
+
+                border-radius: 4px;
+                background: rgba(white, 0.5);
+
+                div.form-line {
+                    display: flex;
+                    flex-direction: column;
+                    width: 80%;
+                    justify-content: space-around;
+
+                    mat-form-field.task-description {
+                        width: 450px;
+                        height: 250px;
+
+                        textarea {
+                            height: 220px;
+                            resize: none;
+                        }
+                    }
+                }
+
+                button {
+                    margin: 8px;
+                    width: 120px;
+                    height: 40px;
+                }
+            }
+        }
+
+        .mat-mdc-text-field-wrapper {
+            width: 550px;
+        }
+    }
+}

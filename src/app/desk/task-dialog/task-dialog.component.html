@@ -1,0 +1,49 @@
+<mat-card *ngIf="!isLoading">
+    <mat-card-header>
+        <span class="header-name">{{ taskInfo.name }}</span>
+        <div class="header-icons">
+            <button mat-icon-button  *ngIf="checkDeleteState()"  (click)="openDeleteTaskDialog(taskInfo.id)">
+                <mat-icon class="material-icons">delete</mat-icon>
+            </button>
+            <button mat-icon-button (click)="closeDialog()">
+                <mat-icon class="material-icons">close</mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <span>Description:</span>
+        <p>{{ taskInfo.desc }}</p>
+        <div class="state-icon">
+            Current status:
+            <span
+                [ngSwitch]="taskInfo.state"
+                style="display: flex; align-items: center;"
+            >
+                <ng-container *ngSwitchCase="taskState.BackLog">
+                    <mat-icon class="material-icons">backup_table</mat-icon>
+                    <span>Back Log</span>
+                </ng-container>
+                <ng-container *ngSwitchCase="taskState.InDev">
+                    <mat-icon class="material-icons">logo_dev</mat-icon>
+                    <span>In Development</span>
+                </ng-container>
+                <ng-container *ngSwitchCase="taskState.Testing">
+                    <mat-icon class="material-icons">bug_report</mat-icon>
+                    <span>Testing</span>
+                </ng-container>
+                <ng-container *ngSwitchCase="taskState.Done">
+                    <mat-icon class="material-icons">done</mat-icon>
+                    <span>Done</span>
+                </ng-container>
+            </span>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <p>Created On: {{ taskInfo.createdOn | convertTimestamp | date:'fullDate' }}</p>
+        <p *ngIf="checkDoneState()">Finished On: {{ taskInfo.completedOn | convertTimestamp | date: 'fullDate'}} </p>
+        <p>Deadline On: {{ taskInfo.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
+        <p>Created by {{creatorName}}</p>
+    </mat-card-footer>
+</mat-card>
+
+<mat-spinner *ngIf="isLoading" [diameter]="45"></mat-spinner>

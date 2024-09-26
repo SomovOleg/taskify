@@ -1,0 +1,58 @@
+:host {
+    mat-spinner {
+        position: absolute;
+        margin: 0;
+        top: 45%;
+        left: 45%;
+    }
+    mat-card {
+        background: white;
+        height: 400px;
+        overflow: auto;
+
+        mat-card-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            background: rgba(255,154,112,255);
+            height: 36px;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 16px;
+            padding: 8px;
+            border-bottom: 1px solid black;
+
+            span.header-name {
+                font-size: 20px;
+                margin: auto;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            div.header-icons {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        mat-card-content {
+            overflow: auto;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid grey;
+
+            div.state-icon {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        mat-card-footer {
+            p {
+                margin: 8px;
+            }
+        }
+    }
+}

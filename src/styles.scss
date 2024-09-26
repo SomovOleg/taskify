@@ -1,0 +1,81 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+@import 'material-icons/iconfont/filled.scss';
+@import 'material-icons/iconfont/outlined.scss';
+
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-free/scss/solid.scss';
+@import '@fortawesome/fontawesome-free/scss/regular.scss';
+@import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
+
+@font-face {
+    font-family: "NeoSansCyrLight";
+    src: url("assets/font/NeoSansCyr-Light.eot");
+    src: url("assets/font/NeoSansCyr-Light.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/NeoSansCyr-Light.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeoSansCyrRegular";
+    src: url("assets/font/NeoSansCyr-Regular.eot");
+    src: url("assets/font/NeoSansCyr-Regular.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/NeoSansCyr-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeoSansCyrMedium";
+    src: url("assets/font/NeoSansCyr-Medium.eot");
+    src: url("assets/font/NeoSansCyr-Medium.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/NeoSansCyr-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeoSansProMedium";
+    src: url("assets/font/NeoSansPro-Medium.eot");
+    src: url("assets/font/NeoSansPro-Medium.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/NeoSansPro-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeoSansProBold";
+    src: url("assets/font/NeoSansPro-Bold.eot");
+    src: url("assets/font/NeoSansPro-Bold.eot?#iefix") format("embedded-opentype"),
+        url("assets/font/NeoSansPro-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    font-family: "NeoSansCyrRegular";
+}
+
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: inherit;
+}
+
+label, span, mat-icon {
+    -webkit-transition: color 0.15s;
+    -moz-transition: color 0.15s;
+    -o-transition: color 0.15s;
+    transition: color 0.15s;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
