@@ -1,0 +1,21 @@
+version: '3'
+services:
+  flask-app:
+    build: ./microservices  
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./flask-app:/microservices
+    networks:
+      - app-network
+
+  angular-app:
+    build: ./webPortal 
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
