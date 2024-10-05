@@ -4,35 +4,29 @@ import { doc } from '@firebase/firestore';
 import { TaskInterface, TaskState } from 'interfaces/task.interface';
 import { Observable, from } from 'rxjs';
 import { AuthService } from './auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskApiService {
 
-    constructor(private _firestore: Firestore, private _authService: AuthService) {
-    }
+    constructor(
+        private _firestore: Firestore,
+        private _authService: AuthService,
+        private _http: HttpClient
+
+    ) {}
 
     private _taskCollection = collection(this._firestore, 'Tasks');
+    private _apiHost: string = 'http://localhost:5000';
 
-    getTasks(): Observable<TaskInterface[]> {
-        return collectionData(this._taskCollection, {
-            idField: 'id'
-        }) as Observable<TaskInterface[]>;
-    };
-
-    updateTaskState(taskId: string, newState: TaskState) {
-        const db = getFirestore();
-
-        updateDoc(doc(db, 'Tasks', taskId), {
-            state: newState
-        })
+    getTask(): Observable<TaskInterface[]> {
+        return this._http.get(`${this._apiHost}/tasks`) as Observable<TaskInterface[]>;
     }
 
     deleteTask(taskId: string) {
-        const db = getFirestore();
-        const promise = deleteDoc(doc(db, 'Tasks', taskId))
-        return from(promise);
+        return this._http.delete(`${this._apiHost}/tasks/${taskId}`);
     }
 
     createNewTask(name: string, description: string, deadlineOn: Date) {

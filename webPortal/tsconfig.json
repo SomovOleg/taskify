@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "strictNullChecks": false,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",

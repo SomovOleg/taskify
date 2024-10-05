@@ -12,38 +12,25 @@ import { saveAs } from 'file-saver'
 })
 export class DeskService {
 
+    private _apiHost: string = 'http://localhost:5000';
+
     constructor(private _taskApi: TaskApiService, private _http: HttpClient) { }
 
     handleTaskStateChange(targetTask: TaskInterface, newState: TaskState) {
-        if(newState === 0) {
-            this._taskApi.updateTaskState(targetTask.id, newState);
-
-            const db = getFirestore();
-
-            updateDoc(doc(db, 'Tasks', targetTask.id), {
-                completedOn: new Date()
-            })
-        } else if (newState === 3) {
-            return;
-        } else {
-            this._taskApi.updateTaskState(targetTask.id, newState);
-        }
+        targetTask.state = newState;
+        return this._http.put(`${this._apiHost}/tasks/${targetTask.id}`, targetTask)
     }
 
     exportToExcel() {
-        console.log('Test')
-        this._http.get('http://localhost:5000/export_tasks', { responseType: 'blob' })
-      .pipe(
-        catchError(error => {
-          console.error('Error downloading the file', error);
-          return throwError(error);
-        })
-      )
+        this._http.get(`${this._apiHost}/export_tasks`, { responseType: 'blob' })
+        .pipe(
+            catchError(error => {
+            console.error('Error downloading the file', error);
+            return throwError(error);
+            })
+        )
       .subscribe((response: Blob) => {
-        // Создаем Blob из ответа
         const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-        // Используем file-saver для сохранения файла
         saveAs(blob, 'tasks.xlsx');
       });
 

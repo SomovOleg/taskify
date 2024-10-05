@@ -5,6 +5,9 @@ import { TaskApiService } from 'src/service/task.api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { DeskService } from 'src/service/desk.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize, Subscription } from 'rxjs';
+import { MenuEventsService } from 'src/service/menu-events.service';
 
 class DeskContainer {
     public get backLog() {
@@ -36,13 +39,25 @@ class DeskContainer {
     }
 
     showAllTasks(tasks: TaskInterface[]) {
-        this._backLogTasks = tasks.filter(task => task.state === this._taskStates.BackLog);
-        this._inDevTasks = tasks.filter(task => task.state === this._taskStates.InDev);
-        this._testingTasks = tasks.filter(task => task.state === this._taskStates.Testing);
-        this._doneTasks = tasks.filter(tasks => tasks.state === this._taskStates.Done);
+        tasks.forEach((task) =>{
+            switch(task.state) {
+                case(this._taskStates.BackLog):
+                    this._backLogTasks.push(task);
+                    return;
+                case(this._taskStates.InDev):
+                    this._inDevTasks.push(task);
+                    return;
+                case (this._taskStates.Testing):
+                    this._testingTasks.push(task);
+                    return;
+                case (this._taskStates.Done):
+                    this._doneTasks.push(task);
+                    return;
+                }
+            })
     }
 
-    private sortTasksArrays() {
+    public sortTasksArrays() {
         this._backLogTasks.sort(this.sortByTimestamp);
         this._inDevTasks.sort(this.sortByTimestamp);
         this.testing.sort(this.sortByTimestamp);
@@ -67,22 +82,32 @@ class DeskContainer {
 })
 export class DeskComponent implements OnInit {
     public isLoading = true
-    public deskStash: DeskContainer = {} as DeskContainer;
+    public deskStash: DeskContainer;
+    private _subscriptions = new Subscription();
 
     constructor(
         private _taskApiService: TaskApiService,
         private _dialog: MatDialog,
-        private _deskService: DeskService
+        private _deskService: DeskService,
+        private _snackBarService: MatSnackBar,
+        private _menuEvents: MenuEventsService
     ) {}
 
     ngOnInit(): void {
-        this._taskApiService.getTasks()
+        this.loadData();
+
+        this._subscriptions.add(this._menuEvents.desk$.subscribe(() => this.loadData()))
+    }
+
+    private loadData() {
+        this.deskStash = null;
+        this._taskApiService.getTask()
         .subscribe({
             next: (tasks) => {
-            this.deskStash = new DeskContainer(tasks);
+                this.deskStash = new DeskContainer(tasks);
         },
-            error: (err) => {
-                console.log(err);
+            error: () => {
+                this._snackBarService.open(`An error was occured!`, 'OK', { duration: 5000 });
             }
         })
     }
@@ -101,7 +126,13 @@ export class DeskComponent implements OnInit {
             const targetTask = event.item.data;
             const newState = Number(event.container.id);
 
-            this._deskService.handleTaskStateChange(targetTask, newState);
+            this._deskService.handleTaskStateChange(targetTask, newState)
+            .pipe(finalize(() => this.deskStash.sortTasksArrays()))
+            .subscribe({
+                error: () => {
+                    this._snackBarService.open(`An error was occured!`, 'OK', { duration: 5000 });
+                }
+            });
         }
     }
 
@@ -114,7 +145,6 @@ export class DeskComponent implements OnInit {
     }
 
     public exportToExcel() {
-        console.log('testing');
         this._deskService.exportToExcel();
     }
 }
