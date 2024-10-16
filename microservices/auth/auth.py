@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify
 import firebase_admin
 from firebase_admin import credentials, auth
+from flask_cors import CORS
 
 app = Flask(__name__)
 
-cred = credentials.Certificate("serviceAccountKey.json")
+CORS(app)
+
+cred = credentials.Certificate("app-taskify-firebase-adminsdk-kmllv-103becd50b.json")
 firebase_admin.initialize_app(cred)
 
 @app.route('/register', methods=['POST'])
@@ -45,4 +48,4 @@ def verify_token():
         return jsonify({"error": str(e)}), 401
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5001)
