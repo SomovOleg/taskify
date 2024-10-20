@@ -42,7 +42,7 @@
         <p>Created On: {{ taskInfo.createdOn | convertTimestamp | date:'fullDate' }}</p>
         <p *ngIf="checkDoneState()">Finished On: {{ taskInfo.completedOn | convertTimestamp | date: 'fullDate'}} </p>
         <p>Deadline On: {{ taskInfo.deadlineOn | convertTimestamp | date:'fullDate' }}</p>
-        <p>Created by {{creatorName}}</p>
+        <p>Created by {{creatorName ?? 'Unknown User'}}</p>
     </mat-card-footer>
 </mat-card>
 

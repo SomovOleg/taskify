@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { docData, getFirestore } from '@angular/fire/firestore';
-import { doc } from '@firebase/firestore';
 import { UserInterface } from 'interfaces/user.interface';
-import { Observable, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NavigationService } from './navigation.service';
+import { HttpClient } from '@angular/common/http';
+import { UserCredentials } from 'src/app/auth/auth.component';
 
 @Injectable({
     providedIn: 'root'
@@ -15,22 +14,20 @@ export class AuthService {
         return this._user;
     }
 
-    constructor(private _firebaseAuth: Auth, private _navService: NavigationService) { }
-
-    private _user: UserInterface;
-
-    signInUser(email: string, password: string): Observable<void> {
-        const promise = signInWithEmailAndPassword(this._firebaseAuth, email, password)
-            .then((user) => {
-                this.getUserInfo(user.user.uid).subscribe(userInfo => this._user = userInfo);
-            });
-
-        return from(promise);
+    public set user(userInfo: UserInterface) {
+        this._user = userInfo;
     }
 
-    getUserInfo(targetUid: string) {
-        const db = getFirestore();
-        const userRef = doc(db, 'Users', targetUid);
-        return docData(userRef, { idField: 'uid' }) as Observable<UserInterface>;
+    constructor(private _http: HttpClient, private _navService: NavigationService) { }
+
+    private _user: UserInterface;
+    private _apiHost: string = 'http://localhost:';
+
+    signInUser(userCredential: UserCredentials): Observable<any> {
+        return this._http.post(`${this._apiHost}5000/login`, userCredential);
+    }
+
+    getUserInfo(userId: string): Observable<any> {
+        return this._http.get(`${this._apiHost}5000/login/${userId}`);
     }
 }

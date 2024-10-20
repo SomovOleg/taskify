@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { getFirestore } from '@firebase/firestore';
 import { TaskApiService } from './task.api.service';
 import { TaskInterface, TaskState } from 'interfaces/task.interface';
-import { doc, updateDoc } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { saveAs } from 'file-saver'
@@ -12,17 +10,17 @@ import { saveAs } from 'file-saver'
 })
 export class DeskService {
 
-    private _apiHost: string = 'http://localhost:5000';
+    private _apiHost: string = 'http://localhost:';
 
-    constructor(private _taskApi: TaskApiService, private _http: HttpClient) { }
+    constructor(private _http: HttpClient) { }
 
     handleTaskStateChange(targetTask: TaskInterface, newState: TaskState) {
         targetTask.state = newState;
-        return this._http.put(`${this._apiHost}/tasks/${targetTask.id}`, targetTask)
+        return this._http.put(`${this._apiHost}:5000/tasks/${targetTask.id}`, targetTask)
     }
 
     exportToExcel() {
-        this._http.get(`${this._apiHost}/export_tasks`, { responseType: 'blob' })
+        this._http.get(`${this._apiHost}:5001/export_tasks`, { responseType: 'blob' })
         .pipe(
             catchError(error => {
             console.error('Error downloading the file', error);

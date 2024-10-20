@@ -19,8 +19,15 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <button [ngClass]="!isAuth ? 'enter-button' : 'auth-button'" mat-flat-button type="submit" (click)="signIn()" [disabled]="!isAuth">Login</button>
-        <button [ngClass]="isAuth ? 'enter-button' : 'auth-button'" mat-flat-button type="submit" (click)="checkData()" [disabled]="isAuth">Enter</button>
+        <button
+            [ngClass]="!isLoading ? 'auth-button' : 'enter-button'"
+            mat-flat-button
+            type="submit"
+            [disabled]="isLoading"
+            (click)="signIn()"
+        >
+            Login
+        </button>
     </mat-card-actions>
     <mat-spinner *ngIf="isLoading" [diameter]="45"></mat-spinner>
 </mat-card>
