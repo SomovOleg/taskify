@@ -21,13 +21,13 @@ export class AuthService {
     constructor(private _http: HttpClient, private _navService: NavigationService) { }
 
     private _user: UserInterface;
-    private _apiHost: string = 'http://localhost:';
+    private _apiHost: string = 'http://localhost:5001';
 
     signInUser(userCredential: UserCredentials): Observable<any> {
-        return this._http.post(`${this._apiHost}5000/login`, userCredential);
+        return this._http.post(`${this._apiHost}/login`, userCredential);
     }
 
     getUserInfo(userId: string): Observable<any> {
-        return this._http.get(`${this._apiHost}5000/login/${userId}`);
+        return this._http.get(`${this._apiHost}/login/${userId}`);
     }
 }

@@ -1,14 +1,28 @@
-version: '3'
 services:
-  flask-app:
-    build: ./microservices  
+  export-app:
+    build: ./microservices/export  
     ports:
       - "5000:5000"
     volumes:
-      - ./flask-app:/microservices
+      - ./export-app:/microservices/export
     networks:
       - app-network
-
+  auth-app:
+    build: ./microservices/auth
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./auth-app:/microservices/auth
+    networks:
+      - app-network
+  tasks-app:
+      build: ./microservices/tasks
+      ports:
+        - "5002:5002"
+      volumes:
+        - ./tasks-app:/microservices/tasks
+      networks:
+        - app-network
   angular-app:
     build: ./webPortal 
     ports:

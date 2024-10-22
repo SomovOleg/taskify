@@ -19,7 +19,7 @@ export class TaskApiService {
     ) {}
 
     private _taskCollection = collection(this._firestore, 'Tasks');
-    private _apiHost: string = 'http://localhost:5000';
+    private _apiHost: string = 'http://localhost:5002';
 
     getTask(): Observable<TaskInterface[]> {
         return this._http.get(`${this._apiHost}/tasks`) as Observable<TaskInterface[]>;

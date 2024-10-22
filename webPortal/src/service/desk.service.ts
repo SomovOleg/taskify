@@ -16,11 +16,11 @@ export class DeskService {
 
     handleTaskStateChange(targetTask: TaskInterface, newState: TaskState) {
         targetTask.state = newState;
-        return this._http.put(`${this._apiHost}:5000/tasks/${targetTask.id}`, targetTask)
+        return this._http.put(`${this._apiHost}5002/tasks/${targetTask.id}`, targetTask)
     }
 
     exportToExcel() {
-        this._http.get(`${this._apiHost}:5001/export_tasks`, { responseType: 'blob' })
+        this._http.get(`${this._apiHost}5000/export_tasks`, { responseType: 'blob' })
         .pipe(
             catchError(error => {
             console.error('Error downloading the file', error);
