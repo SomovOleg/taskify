@@ -27,7 +27,6 @@ def register_user():
 def login_user():
     data = request.get_json()
     email = data.get('email')
-    password = data.get('password')
     try:
         user = auth.get_user_by_email(email)
         return jsonify(user.uid), 200
@@ -58,4 +57,4 @@ def verify_token():
         return jsonify({"error": str(e)}), 401
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5001)
+    app.run(host='0.0.0.0', port=5001)
