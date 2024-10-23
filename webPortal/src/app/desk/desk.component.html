@@ -70,7 +70,7 @@
                         *ngFor="let task of deskStash.testing"
                         cdkDrag
                         [cdkDragData]="task"
-                        (click)="taskDialogOpen(task); exportToExcel()"
+                        (click)="taskDialogOpen(task)"
                     >
                         <mat-card-header>
                             <span>{{task.name}}</span>

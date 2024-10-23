@@ -1,4 +1,4 @@
-import { NgModule, importProvidersFrom } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
@@ -18,7 +18,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CreateTaskComponent } from './create-task/create-task.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,15 +26,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { getFirestore, provideFirestore } from '@angular/fire/firestore'
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { firebaseConfig } from 'firebaseconfig';
-import { getAuth, provideAuth } from '@angular/fire/auth';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ConvertTimestampPipe } from './desk/convert-timestamp.pipe';
 import { TaskDialogComponent } from './desk/task-dialog/task-dialog.component';
 import { TaskDeleteDialogComponent } from './desk/task-delete-dialog/task-delete-dialog.component';
 import { AuthGuard } from './guards/auth-guard';
+import { UserGuard } from './guards/user-guard';
+import { CreateTaskComponent } from './create-task/create-task.component';
 
 
 @NgModule({
@@ -47,8 +46,8 @@ import { AuthGuard } from './guards/auth-guard';
     AuthComponent,
 
     ConvertTimestampPipe,
-     TaskDialogComponent,
-     TaskDeleteDialogComponent,
+    TaskDialogComponent,
+    TaskDeleteDialogComponent,
   ],
   imports: [
     //Angular
@@ -60,7 +59,8 @@ import { AuthGuard } from './guards/auth-guard';
     HttpClientModule,
 
     //Firebase
-    AngularFireModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
 
     //Material
     MatCardModule,
@@ -80,12 +80,8 @@ import { AuthGuard } from './guards/auth-guard';
     MatDialogModule
   ],
   providers: [
-    importProvidersFrom([
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),]),
-
-    AuthGuard
+    AuthGuard,
+    UserGuard,
     ],
   bootstrap: [ AppComponent ]
 })

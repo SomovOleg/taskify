@@ -14,6 +14,6 @@ export interface TaskInterface {
     creatorId: string,
     createdOn: Timestamp,
     deadlineOn: Timestamp,
-    completedOn: Timestamp,
+    completedOn?: Timestamp,
     state: TaskState,
 }

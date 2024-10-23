@@ -10,8 +10,10 @@ export class ConvertTimestampPipe implements PipeTransform {
         switch(typeof(value)) {
             case 'string':
                 return new Date(value as string);
-            default:
-                return value.toDate();
+                break;
+            case 'object':
+                return new Timestamp(value.seconds, value.nanoseconds).toDate();
+
         }
     }
 

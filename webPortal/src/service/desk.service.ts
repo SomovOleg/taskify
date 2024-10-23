@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { TaskApiService } from './task.api.service';
 import { TaskInterface, TaskState } from 'interfaces/task.interface';
 import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { saveAs } from 'file-saver'
+import { Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,9 @@ export class DeskService {
 
     handleTaskStateChange(targetTask: TaskInterface, newState: TaskState) {
         targetTask.state = newState;
+        if(newState === 3) {
+            targetTask.completedOn = Timestamp.now();
+        }
         return this._http.put(`${this._apiHost}5002/tasks/${targetTask.id}`, targetTask)
     }
 

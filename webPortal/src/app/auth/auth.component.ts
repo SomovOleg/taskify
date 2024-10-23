@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../service/auth.service';
 import { NavigationService } from 'src/service/navigation.service';
-import { UserInterface } from 'interfaces/user.interface';
 
 @Component({
   selector: 'app-auth',
@@ -25,10 +24,9 @@ export class AuthComponent {
         private _matSnackBar: MatSnackBar) {
     }
 
-    public signIn() {
+    public signInTest() {
         this.isLoading = !this.isLoading
-        this._authService
-        .signInUser(
+        this._authService.checkUserCredentials(
             {
                 email: this.email,
                 password: this.password
@@ -36,16 +34,24 @@ export class AuthComponent {
         )
         .pipe(finalize(() => this.isLoading = !this.isLoading))
         .subscribe({
-            next: (userId) => {
-                this._authService.getUserInfo(userId).subscribe((userData) => {
-                    this._authService.user = userData
-                    this.redirectToDesk();
-                })
-            },
-            error: () => {
-                this._matSnackBar.open(`Error on login!`, 'OK', { duration: 5000 });
-            }
-        });
+               next: (result) => {
+                    this._authService.getUserInfo(result.user.uid).subscribe({
+                        next: (userData) => {
+                            this._authService.user = userData;
+                            this._authService.user.uid = result.user.uid;
+                            this.redirectToDesk();
+                        },
+
+                        error: () => {
+                            this._matSnackBar.open(`Error on login!`, 'OK', { duration: 5000 });
+                        }
+                    })
+               },
+
+               error: () => {
+                    this._matSnackBar.open(`User doesn't exist or password is incorrect`, 'OK', { duration: 5000 });
+               }
+        })
     }
 
     public redirectToDesk() {
