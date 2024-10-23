@@ -34,7 +34,7 @@ jobs:
 
     - name: Test the app with curl
       run: |
-        curl -f http://127.0.0.1:5000 && echo "App is running successfully." || (echo "App did not start" && exit 1)
+        curl -f http://127.0.0.1:5000/export_tasks && echo "App is running successfully." || (echo "App did not start" && exit 1)
 
     - name: Stop and remove container
       run: docker stop export-app && docker rm export-app
